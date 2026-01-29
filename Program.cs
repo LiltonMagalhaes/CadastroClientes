@@ -3,21 +3,26 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Registrar o DbContext (SQLite como exemplo)
+// 🔹 Configuração de serviços (antes do builder.Build)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",
+        policy => policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=cadastro.db"));
 
-// ✅ Adicionar suporte a Controllers (API)
 builder.Services.AddControllers();
-
-// ✅ (Opcional) Adicionar Swagger para testar os endpoints
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 🔹 Construção do app
 var app = builder.Build();
 
-// ✅ Configuração do pipeline HTTP
-// Sempre habilita Swagger
+// 🔹 Configuração do pipeline
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -27,14 +32,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
-
+app.UseCors("AllowReact");
 app.UseRouting();
-
 app.UseAuthorization();
 
-// ✅ Mapear Controllers (em vez de Razor Pages)
 app.MapControllers();
 
 app.Run();

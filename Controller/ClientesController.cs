@@ -16,7 +16,7 @@ namespace CadastroClientes.Controllers
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(Cliente cliente)
+        public IActionResult Post([FromBody] Cliente cliente)
         {
             _context.Clientes.Add(cliente);
             _context.SaveChanges();
@@ -27,6 +27,11 @@ namespace CadastroClientes.Controllers
         public IActionResult Listar()
         {
             return Ok(_context.Clientes.ToList());
+        }
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            return Ok();
         }
 
         [HttpPut("{id}")]

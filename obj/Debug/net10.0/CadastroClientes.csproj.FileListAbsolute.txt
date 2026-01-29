@@ -217,3 +217,7 @@ C:\Source\CadastroClientes\obj\Debug\net10.0\refint\CadastroClientes.dll
 C:\Source\CadastroClientes\obj\Debug\net10.0\CadastroClientes.pdb
 C:\Source\CadastroClientes\obj\Debug\net10.0\CadastroClientes.genruntimeconfig.cache
 C:\Source\CadastroClientes\obj\Debug\net10.0\ref\CadastroClientes.dll
+C:\Source\CadastroClientes\bin\Debug\net10.0\cadastro-clientes-frontend\package-lock.json
+C:\Source\CadastroClientes\bin\Debug\net10.0\cadastro-clientes-frontend\package.json
+C:\Source\CadastroClientes\bin\Debug\net10.0\cadastro-clientes-frontend\public\manifest.json
+C:\Source\CadastroClientes\obj\Debug\net10.0\CadastroClientes.sourcelink.json
