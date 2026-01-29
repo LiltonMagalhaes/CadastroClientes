@@ -1,41 +1,42 @@
-# CadastroClientes API
+# CadastroClientes
 
-API em ASP.NET Core para **cadastro de clientes**, emissão de **orçamentos** e **recibos**.  
-Projeto desenvolvido com **Entity Framework Core** e banco de dados **SQLite**.
-
----
-
-## Funcionalidades
-
-### Clientes
-- `POST /api/Clientes` → Cadastrar cliente
-- `GET /api/Clientes` → Listar todos os clientes
-- `GET /api/Clientes/{id}` → Buscar cliente por ID
-- `PUT /api/Clientes/{id}` → Atualizar cliente
-- `DELETE /api/Clientes/{id}` → Excluir cliente
-
-### Orçamentos
-- `POST /api/Orcamentos` → Emitir orçamento (materiais + mão de obra + serviços)
-- `GET /api/Orcamentos` → Listar orçamentos
-- `GET /api/Orcamentos/{id}` → Buscar orçamento por ID
-
-### Recibos
-- `POST /api/Recibos` → Emitir recibo
-- `GET /api/Recibos` → Listar recibos
-- `GET /api/Recibos/{id}` → Buscar recibo por ID
+Sistema de cadastro de clientes desenvolvido em **ASP.NET Core 8** com **Entity Framework Core** e **SQLite**, integrado a um front-end em **React**.  
+Permite realizar operações completas de CRUD (listar, incluir, alterar, excluir) e direcionar para impressão.
 
 ---
 
-## Tecnologias utilizadas
-- ASP.NET Core 8
-- Entity Framework Core
-- SQLite
-- Swagger (documentação e testes)
+## 🚀 Funcionalidades
+- 📋 Listagem de clientes
+- ➕ Inclusão de novos clientes
+- ✏️ Alteração de dados existentes
+- ❌ Exclusão de clientes
+- 🖨️ Direcionamento para impressão
 
 ---
 
-## Como rodar o projeto
+## 🛠️ Tecnologias utilizadas
+- **ASP.NET Core 8**
+- **Entity Framework Core**
+- **SQLite**
+- **React (frontend)**
+- **Swagger** para documentação e testes da API
 
+---
+
+## 📌 Estrutura da API
+### Endpoints disponíveis
+
+- `GET /api/Clientes` → Lista todos os clientes  
+- `GET /api/Clientes/{id}` → Busca cliente específico  
+- `POST /api/Clientes` → Cadastra novo cliente  
+- `PUT /api/Clientes/{id}` → Atualiza cliente existente  
+- `DELETE /api/Clientes/{id}` → Exclui cliente  
+
+---
+
+## ⚙️ Como executar o projeto
+
+### 🔧 Backend (ASP.NET Core)
 1. Clone o repositório:
    ```bash
    git clone https://github.com/LiltonMagalhaes/CadastroClientes.git
