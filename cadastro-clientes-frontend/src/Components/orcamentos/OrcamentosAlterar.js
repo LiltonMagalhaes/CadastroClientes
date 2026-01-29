@@ -22,7 +22,7 @@ function ClientesAlterar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://localhost:7037/api/Clientes/${clienteSelecionado.id}`, clienteSelecionado)
+    axios.put(`http://localhost:5037/api/Clientes/${clienteSelecionado.id}`, clienteSelecionado)
       .then(() => {
         alert("Cliente alterado com sucesso!");
         setClienteSelecionado(null);

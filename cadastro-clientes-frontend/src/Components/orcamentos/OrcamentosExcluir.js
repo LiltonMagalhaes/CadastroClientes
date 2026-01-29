@@ -6,14 +6,14 @@ function ClientesExcluir() {
   const [busca, setBusca] = useState("");
 
   useEffect(() => {
-    axios.get("https://localhost:7037/api/Clientes")
+    axios.get("http://localhost:5037/api/Clientes")
       .then(response => setClientes(response.data))
       .catch(error => console.error("Erro ao buscar clientes:", error));
   }, []);
 
   const handleDelete = (id) => {
     if (window.confirm("Tem certeza que deseja excluir este cliente?")) {
-      axios.delete(`https://localhost:7037/api/Clientes/${id}`)
+      axios.delete(`http://localhost:7037/api/Clientes/${id}`)
         .then(() => {
           alert("Cliente excluído com sucesso!");
           setClientes(clientes.filter(c => c.id !== id));

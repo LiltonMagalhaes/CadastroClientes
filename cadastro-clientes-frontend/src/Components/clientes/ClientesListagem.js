@@ -1,62 +1,106 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ClientesListagem() {
   const [clientes, setClientes] = useState([]);
-  const [busca, setBusca] = useState("");
 
   useEffect(() => {
-    axios.get("https://localhost:7037/api/Clientes")
-      .then(response => setClientes(response.data))
-      .catch(error => console.error("Erro ao buscar clientes:", error));
+    carregarClientes();
   }, []);
 
-  const estiloCelula = {
-    border: "1px solid #ddd",
-    padding: "12px",
-    textAlign: "left"
+  const carregarClientes = async () => {
+    try {
+      const response = await axios.get("http://localhost:5037/api/Clientes");
+      setClientes(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar clientes:", error);
+    }
   };
 
-  const clientesFiltrados = clientes.filter(c =>
-    c.nome.toLowerCase().includes(busca.toLowerCase()) ||
-    c.cpf?.toLowerCase().includes(busca.toLowerCase())
-  );
+  const excluirCliente = async (id) => {
+    if (window.confirm("Tem certeza que deseja excluir este cliente?")) {
+      try {
+        await axios.delete(`http://localhost:5037/api/Clientes/${id}`);
+        carregarClientes();
+      } catch (error) {
+        console.error("Erro ao excluir cliente:", error);
+      }
+    }
+  };
 
   return (
-    <div style={{ maxWidth: "900px", margin: "0 auto", padding: "20px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>📋 Lista de Clientes</h2>
+    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "16px", fontSize: "20px" }}>
+        Lista de Clientes
+      </h2>
 
-      <input
-        type="text"
-        placeholder="🔍 Buscar por nome ou CPF"
-        value={busca}
-        onChange={e => setBusca(e.target.value)}
+      <table
         style={{
-          padding: "10px",
           width: "100%",
-          maxWidth: "400px",
-          marginBottom: "20px",
-          borderRadius: "6px",
-          border: "1px solid #ccc"
+          borderCollapse: "collapse",
+          fontSize: "13px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.08)"
         }}
-      />
-
-      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px", fontSize: "16px" }}>
-        <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th style={estiloCelula}>Nome</th>
-            <th style={estiloCelula}>Email</th>
-            <th style={estiloCelula}>Telefone</th>
-            <th style={estiloCelula}>CPF</th>
+      >
+        <thead style={{ backgroundColor: "#007bff", color: "white" }}>
+          <tr>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Nome</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Email</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Telefone</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>CPF</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Endereço</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Cidade</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Estado</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>CEP</th>
+            <th style={{ padding: "6px", border: "1px solid #ccc" }}>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {clientesFiltrados.map(cliente => (
+          {clientes.map((cliente) => (
             <tr key={cliente.id}>
-              <td style={estiloCelula}>{cliente.nome}</td>
-              <td style={estiloCelula}>{cliente.email}</td>
-              <td style={estiloCelula}>{cliente.telefone}</td>
-              <td style={estiloCelula}>{cliente.cpf}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.nome}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.email}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.telefone}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.cpf}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.endereco}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.cidade}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.estado}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>{cliente.cep}</td>
+              <td style={{ padding: "6px", border: "1px solid #ccc" }}>
+                <div style={{ display: "flex", justifyContent: "center", gap: "6px" }}>
+                  <Link
+                    to={`/clientes/alterar?id=${cliente.id}`}
+                    style={{
+                      padding: "2px 6px",
+                      border: "1px solid #ffa500",
+                      color: "#ffa500",
+                      borderRadius: "4px",
+                      fontSize: "11px",
+                      textDecoration: "none",
+                      backgroundColor: "transparent",
+                      textAlign: "center"
+                    }}
+                  >
+                    Alterar
+                  </Link>
+                  <button
+                    onClick={() => excluirCliente(cliente.id)}
+                    style={{
+                      padding: "2px 6px",
+                      border: "1px solid #dc3545",
+                      color: "#dc3545",
+                      backgroundColor: "transparent",
+                      borderRadius: "4px",
+                      fontSize: "11px",
+                      cursor: "pointer",
+                      textAlign: "center"
+                    }}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

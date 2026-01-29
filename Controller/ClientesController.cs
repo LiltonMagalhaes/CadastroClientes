@@ -15,6 +15,7 @@ namespace CadastroClientes.Controllers
             _context = context;
         }
 
+        // ➕ Cadastrar cliente
         [HttpPost]
         public IActionResult Post([FromBody] Cliente cliente)
         {
@@ -23,41 +24,57 @@ namespace CadastroClientes.Controllers
             return Ok(cliente);
         }
 
+        // 📋 Listar todos os clientes
         [HttpGet]
         public IActionResult Listar()
         {
             return Ok(_context.Clientes.ToList());
         }
+
+        // 🔍 Buscar cliente por ID
+        [HttpGet("{id}")]
+        public IActionResult BuscarPorId(int id)
+        {
+            var cliente = _context.Clientes.Find(id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return Ok(cliente);
+        }
+
         [HttpOptions]
         public IActionResult Options()
         {
             return Ok();
         }
 
+        // ✏️ Atualizar cliente
         [HttpPut("{id}")]
-public IActionResult Atualizar(int id, Cliente clienteAtualizado)
-{
-    // Validação: ID da URL deve ser igual ao ID do objeto enviado
-    if (id != clienteAtualizado.Id)
-    {
-        return BadRequest("ID do cliente não confere.");
-    }
+        public IActionResult Atualizar(int id, [FromBody] Cliente clienteAtualizado)
+        {
+            var cliente = _context.Clientes.Find(id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
 
-    var cliente = _context.Clientes.Find(id);
-    if (cliente == null)
-    {
-        return NotFound();
-    }
+            // Atualiza todos os campos
+            cliente.Nome = clienteAtualizado.Nome;
+            cliente.Email = clienteAtualizado.Email;
+            cliente.Telefone = clienteAtualizado.Telefone;
+            cliente.Cpf = clienteAtualizado.Cpf;
+            cliente.Endereco = clienteAtualizado.Endereco;
+            cliente.Bairro = clienteAtualizado.Bairro;
+            cliente.Cidade = clienteAtualizado.Cidade;
+            cliente.Estado = clienteAtualizado.Estado;
+            cliente.Cep = clienteAtualizado.Cep;
 
-    cliente.Nome = clienteAtualizado.Nome;
-    cliente.Email = clienteAtualizado.Email;
-    cliente.Telefone = clienteAtualizado.Telefone;
+            _context.SaveChanges();
+            return Ok(cliente);
+        }
 
-    _context.SaveChanges();
-    return Ok(cliente);
-}
-
-
+        // ❌ Excluir cliente
         [HttpDelete("{id}")]
         public IActionResult Excluir(int id)
         {
@@ -71,7 +88,5 @@ public IActionResult Atualizar(int id, Cliente clienteAtualizado)
             _context.SaveChanges();
             return NoContent();
         }
-
-
     }
 }

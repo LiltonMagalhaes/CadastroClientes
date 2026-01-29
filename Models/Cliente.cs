@@ -3,15 +3,16 @@ namespace CadastroClientes.Models
     public class Cliente
     {
         public int Id { get; set; }
-        public required string Nome { get; set; }
-        public required string CPF { get; set; }
-        public required string Email { get; set; }
-        public required string Telefone { get; set; }
-        public required string Endereco { get; set; }
-        public required string Bairro { get; set; }
-        public required string Cidade { get; set; }
-        public required string Estado { get; set; }
-        public required string CEP { get; set; }
-        
+        public string Nome { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Telefone { get; set; } = string.Empty;
+
+        // ➕ Campos que estavam faltando
+        public string Cpf { get; set; } = string.Empty;
+        public string Endereco { get; set; } = string.Empty;
+        public string Bairro { get; set; } = string.Empty;
+        public string Cidade { get; set; } = string.Empty;
+        public string Estado { get; set; } = string.Empty;
+        public string Cep { get; set; } = string.Empty;
     }
 }
